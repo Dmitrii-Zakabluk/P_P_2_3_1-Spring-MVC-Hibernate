@@ -49,41 +49,69 @@
         }
 
         form {
-            display: inline; /* Чтобы формы были на одной линии */
+            display: inline;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #007BFF;
+            outline: none;
         }
     </style>
 </head>
 <body>
 <h2>User Info</h2>
+<div th:if="${errorMessage}" class="error">
+    <p th:text="${errorMessage}"></p>
+</div>
 <br>
 <form th:action="@{/saveUser}" th:object="${user}" method="post">
     <input type="hidden" th:field="*{id}"/>
 
-    <label>Name</label>
-    <label>
-        <input type="text" th:field="*{name}"/>
-    </label>
-    <br><br>
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" th:field="*{name}" required/>
+        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+    <br>
 
-    <label>Surname</label>
-    <label>
-        <input type="text" th:field="*{surname}"/>
-    </label>
-    <br><br>
+    <div>
+        <label for="surname">Surname</label>
+        <input type="text" id="surname" th:field="*{surname}" required/>
+        <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+    </div>
+    <br>
 
-    <label>Department</label>
-    <label>
-        <input type="text" th:field="*{department}"/>
-    </label>
-    <br><br>
+    <div>
+        <label for="department">Department</label>
+        <input type="text" id="department" th:field="*{department}" required/>
+        <div class="error" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></div>
+    </div>
+    <br>
 
-    <label>Salary</label>
-    <label>
-        <input type="number" th:field="*{salary}"/>
-    </label>
-    <br><br>
+    <div>
+        <label for="salary">Salary</label>
+        <input type="number" id="salary" th:field="*{salary}" required/>
+        <div class="error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+    </div>
+    <br>
 
     <input type="submit" value="OK">
+    <a href="#" th:href="@{/users}" style="padding: 5px 10px; text-decoration: none; background-color: #6c757d; color: white; border-radius: 5px;">Cancel</a>
 </form>
 
 </body>
